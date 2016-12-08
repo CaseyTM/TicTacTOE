@@ -10,8 +10,24 @@ var whosTurn = 1;
 var player1Squares = [];
 var player2Squares = [];
 var someoneWon = false;
-var computerPlayer = false;
+var computerPlayer = true;
+var singlePlayer = true;
+var player1Score = 0
+var player2Score = 0
 
+function reset(){
+	whosTurn = 1;
+	player1Squares = [];
+	player2Squares = [];
+	someoneWon = false;
+	computerPlayer = true;
+	var squareDivs = document.getElementsByClassName('square');
+		for ( var i = 0; i < 9; i++){
+		squareDivs[i].className = 'square'
+		squareDivs[i].innerHTML = "Z"
+		// console.log(squareDivs[i]);
+	}
+}
 // Set up winners array
 	var winningCombos=[
 	['a1','b1','c1'],
@@ -23,6 +39,12 @@ var computerPlayer = false;
 	['a3','b2','c1'],
 	['a1','b2','c3']
 	]
+
+function oneOrTwoPlayers(){
+	computerPlayer = false;
+
+}
+
 // console.log(winningCombos)
 function markSquare(currentSquare){
 			// console.log(square.id);
@@ -52,7 +74,7 @@ function markSquare(currentSquare){
 		var needAsquare = true;
 		var squareDivs = document.getElementsByClassName('square');
 while(needAsquare){
-		var randomNumber = squareDivs(Math.ceil(Math.random()*8) + 1);
+		var randomNumber = (Math.ceil(Math.random()*8));
 		var randomSquare = squareDivs[randomNumber];
 		isTaken = markSquare(randomSquare)
 		console.log(isTaken)
@@ -84,6 +106,8 @@ while(needAsquare){
 				// if player had all 3 of these J's then winners
 				console.log("Player" + whoJustWent + "won")
 				gameOver(whoJustWent, winningCombos[i]);
+				console.log("Hey its me" + " , " +whoJustWent)
+
 				break;
 			}
 			// console.log("finished");
@@ -91,9 +115,16 @@ while(needAsquare){
 	}
 	function gameOver(whoJustWon, winningCombo){
 		var message = "congrats to player" + whoJustWon + ", You just won with" + " , " + winningCombo
+		if(whoJustWon === 1){
+					player1Score++;
+				}
+				if(whoJustWon === 2){
+					player2Score++;
+				}
 		document.getElementById('message').innerHTML = message;
 		for(var i=0; i<winningCombo.length; i++){
 			document.getElementById(winningCombo[i]).className += ' winning-square';
+			
 
 		}
 		someoneWon = true;
